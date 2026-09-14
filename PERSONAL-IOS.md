@@ -1,0 +1,36 @@
+# iOS Shadowsocks 客户端开发准备
+
+本目录来自 https://github.com/OutlineFoundation/outline-apps 。这是基于 Outline 的开发基础，并非已经重写、测试和发布的新应用。原始许可证和第三方声明保留在仓库中。
+
+## 已完成
+
+- 下载上游源码，包含 iOS App、VPN 扩展、Shadowsocks 通信实现。
+- 新增 `build-personal-ios.sh`：通过上游初始化流程构建 Release 配置，并包装未签名 IPA。
+- 新增 GitHub Actions 流程 `Personal iOS unsigned IPA`，在 macOS runner 上构建，保存 IPA 和 SHA-256 校验值 14 天。支持手动触发，以及构建脚本变更时自动触发。
+- 已创建个人仓库：https://github.com/huazhu624-tech/shadowsocks-ios 。
+
+## 尚未完成
+
+- 当前电脑仅有 Command Line Tools，没有完整 Xcode，尚未编译验证上述流程。
+- 首次云端构建已启动：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34893268580 。此文档记录开发准备状态，实际构建结果与产物以 Actions 页面为准。
+- 没有完成界面重写、独立品牌或 App ID 配置。
+- 尚未签名、安装或进行真机网络测试。
+
+## 构建
+
+本地需要完整 Xcode、iPhoneOS SDK、Node 22，以及根目录 go.mod 指定的 Go 版本。
+
+```sh
+npm ci
+bash build-personal-ios.sh
+```
+
+将项目上传到自己的 GitHub 仓库后，进入 Actions，选择 `Personal iOS unsigned IPA`，点击 Run workflow。构建成功后可以从该次运行的 Artifacts 下载压缩包。该文件是未签名 IPA，不是直接安装链接。
+
+## 安装条件
+
+App 和内嵌 VPN 扩展需要各自有效的签名、描述文件及匹配的 Network Extension / App Groups 权限。普通免费账号或任意自签工具不一定支持这些权限，不能承诺可用。正式分发前需要配置自己的 Bundle ID、App Groups 和开发团队，再使用对应分发方式导出安装包。不要将证书私钥、密码或服务器访问密钥提交到仓库。
+
+没有签名条件、只希望先使用客户端时，可使用官方 App Store 版本（可用性取决于账号地区）：https://apps.apple.com/us/app/outline-app/id1356177741 。安装后仍需要自己的服务器访问密钥；软件本身不附送节点。
+
+参考：https://github.com/OutlineFoundation/outline-apps/tree/master/client/src/cordova/apple
