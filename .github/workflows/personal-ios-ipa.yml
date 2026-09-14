@@ -10,6 +10,10 @@ on:
       - .github/workflows/personal-ios-ipa.yml
       - build-personal-ios.sh
       - client/web/build.action.mjs
+      - client/src/cordova/apple/**
+      - client/src/cordova/plugin/apple/**
+      - validate-personal-ipa.py
+      - PERSONAL-SIGNING.md
 
 permissions:
   contents: read
@@ -38,5 +42,7 @@ jobs:
           path: |
             output/personal-ios.*/PersonalClient-unsigned.ipa
             output/personal-ios.*/SHA256SUMS.txt
+            output/personal-ios.*/package-manifest.json
+            output/personal-ios.*/PERSONAL-SIGNING.md
           if-no-files-found: error
           retention-days: 14

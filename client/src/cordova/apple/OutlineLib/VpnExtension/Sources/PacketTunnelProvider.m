@@ -43,9 +43,9 @@ NSString *const kDefaultPathKey = @"defaultPath";
 
 - (id)init {
   self = [super init];
-  NSString *appGroup = @"group.org.getoutline.client";
-  NSURL *containerUrl = [[NSFileManager defaultManager]
-                         containerURLForSecurityApplicationGroupIdentifier:appGroup];
+  NSString *appGroup = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PersonalAppGroup"];
+  NSURL *containerUrl = appGroup.length ? [[NSFileManager defaultManager]
+                         containerURLForSecurityApplicationGroupIdentifier:appGroup] : nil;
   NSString *logsDirectory = [[containerUrl path] stringByAppendingPathComponent:@"Logs"];
   id<DDLogFileManager> logFileManager = [[DDLogFileManagerDefault alloc]
                                          initWithLogsDirectory:logsDirectory];

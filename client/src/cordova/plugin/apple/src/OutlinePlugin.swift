@@ -48,7 +48,9 @@ class OutlinePlugin: CDVPlugin {
   #else
     private static let kPlatform = "iOS"
   #endif
-  private static let kAppGroup = "group.org.getoutline.client"
+  // Read from the package so a signing service can update the shared group.
+  private static let kAppGroup = Bundle.main.object(forInfoDictionaryKey: "PersonalAppGroup")
+    as? String ?? "group.io.github.huazhu624tech.shadowsocks"
 
   override func pluginInitialize() {
     #if DEBUG

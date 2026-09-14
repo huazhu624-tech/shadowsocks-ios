@@ -16,10 +16,12 @@
 ## 尚未完成
 
 - 当前电脑仅有 Command Line Tools，没有完整 Xcode；构建已在 GitHub macOS runner 验证。
-- 没有完成界面重写、独立品牌或 App ID 配置。
+- 0.2.0 已配置独立 App ID、显示名称和共享组；保留 Outline 原有主要界面与功能。
 - 尚未签名、安装或进行真机网络测试。
 
 ## 构建
+
+0.2.0 新增 App / VPN 扩展版本对齐、arm64 和包标识一致性检查，并在产物中附带 `package-manifest.json` 与 `PERSONAL-SIGNING.md`。上方 0.1.0 下载链接为历史构建；最新构建请在 Actions 中查看。
 
 本地需要完整 Xcode、iPhoneOS SDK、Node 22，以及根目录 go.mod 指定的 Go 版本。
 

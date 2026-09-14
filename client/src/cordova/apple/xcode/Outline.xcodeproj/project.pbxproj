@@ -826,7 +826,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.outline.ios.client;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.huazhu624tech.shadowsocks;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = org.outline.macos.client;
 				PRODUCT_NAME = Outline;
 				PROVISIONING_PROFILE = "";
@@ -873,7 +873,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.outline.ios.client;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.huazhu624tech.shadowsocks;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = org.outline.macos.client;
 				PRODUCT_NAME = Outline;
 				PROVISIONING_PROFILE_SPECIFIER = "";
