@@ -9,6 +9,7 @@ on:
     paths:
       - .github/workflows/personal-ios-ipa.yml
       - build-personal-ios.sh
+      - client/web/build.action.mjs
 
 permissions:
   contents: read
