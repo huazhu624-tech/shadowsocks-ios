@@ -8,11 +8,14 @@
 - 新增 `build-personal-ios.sh`：通过上游初始化流程构建 Release 配置，并包装未签名 IPA。
 - 新增 GitHub Actions 流程 `Personal iOS unsigned IPA`，在 macOS runner 上构建，保存 IPA 和 SHA-256 校验值 14 天。支持手动触发，以及构建脚本变更时自动触发。
 - 已创建个人仓库：https://github.com/huazhu624-tech/shadowsocks-ios 。
+- 已修复个人 Release 构建强制要求 SENTRY_DSN 的问题；未配置时不设置远端错误报告地址。
+- 云端 Release 编译和上传已成功：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34893867664 。
+- 下载地址：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34893867664/artifacts/10368295893 。需登录 GitHub，产物到期时间为 2026-09-28。
+- 已下载产物并验证 SHA-256，包内包含 arm64 iOS App 和 VPN 扩展。App 版本 0.1.0，最低 iOS 15.5。
 
 ## 尚未完成
 
-- 当前电脑仅有 Command Line Tools，没有完整 Xcode，尚未编译验证上述流程。
-- 首次云端构建已启动：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34893268580 。此文档记录开发准备状态，实际构建结果与产物以 Actions 页面为准。
+- 当前电脑仅有 Command Line Tools，没有完整 Xcode；构建已在 GitHub macOS runner 验证。
 - 没有完成界面重写、独立品牌或 App ID 配置。
 - 尚未签名、安装或进行真机网络测试。
 
