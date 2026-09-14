@@ -1,0 +1,41 @@
+# Copyright 2026 Personal iOS Client Contributors
+# SPDX-License-Identifier: Apache-2.0
+name: Personal iOS unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - .github/workflows/personal-ios-ipa.yml
+      - build-personal-ios.sh
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+      - name: Install dependencies
+        run: npm ci
+      - name: Build unsigned IPA
+        run: bash build-personal-ios.sh
+      - name: Upload unsigned package
+        uses: actions/upload-artifact@v4
+        with:
+          name: PersonalClient-unsigned-ipa
+          path: |
+            output/personal-ios.*/PersonalClient-unsigned.ipa
+            output/personal-ios.*/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14
