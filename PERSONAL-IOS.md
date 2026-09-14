@@ -4,6 +4,10 @@
 
 ## 已完成
 
+- **最新 0.2.0 已成功构建并下载复核**：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34897706633 。
+- **0.2.0 下载**：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/34897706633/artifacts/10370125236 。需登录 GitHub；产物到期时间为 2026-09-28 21:21 UTC。
+- 新包 App 与 VPN 扩展均为 arm64、版本 0.2.0、构建号 497061。独立标识、共享组、扩展入口和双层 SHA-256 校验通过。未签名、未进行真机测试。
+
 - 下载上游源码，包含 iOS App、VPN 扩展、Shadowsocks 通信实现。
 - 新增 `build-personal-ios.sh`：通过上游初始化流程构建 Release 配置，并包装未签名 IPA。
 - 新增 GitHub Actions 流程 `Personal iOS unsigned IPA`，在 macOS runner 上构建，保存 IPA 和 SHA-256 校验值 14 天。支持手动触发，以及构建脚本变更时自动触发。
@@ -21,7 +25,7 @@
 
 ## 构建
 
-0.2.0 新增 App / VPN 扩展版本对齐、arm64 和包标识一致性检查，并在产物中附带 `package-manifest.json` 与 `PERSONAL-SIGNING.md`。上方 0.1.0 下载链接为历史构建；最新构建请在 Actions 中查看。
+0.2.0 新增 App / VPN 扩展版本对齐、arm64 和包标识一致性检查，并在产物中附带 `package-manifest.json` 与 `PERSONAL-SIGNING.md`。上方 0.1.0 下载链接为历史构建。
 
 本地需要完整 Xcode、iPhoneOS SDK、Node 22，以及根目录 go.mod 指定的 Go 版本。
 
