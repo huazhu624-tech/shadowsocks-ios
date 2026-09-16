@@ -52,6 +52,10 @@ export async function main(...parameters) {
   const {platform, buildMode, versionName, arch, goArch} =
     getBuildParameters(parameters);
   const {autoUpdateProvider = 'generic', autoUpdateUrl} = minimist(parameters);
+  const personalBuild = process.env.PERSONAL_WINDOWS_BUILD === '1';
+  if (personalBuild && platform !== 'windows') {
+    throw new TypeError('Personal packaging supports Windows only.');
+  }
 
   const packaging = ELECTRON_PLATFORM_PACKAGING[platform];
   if (!packaging) {
@@ -68,7 +72,7 @@ export async function main(...parameters) {
     );
   }
 
-  if (buildMode === 'release' && !autoUpdateUrl) {
+  if (buildMode === 'release' && !autoUpdateUrl && !personalBuild) {
     throw new TypeError(
       "You need to add an electron-builder compliant auto-update url via an 'autoUpdateUrl' flag." +
         'See here: https://www.electron.build/configuration/publish#publishers'
@@ -91,6 +95,14 @@ export async function main(...parameters) {
   );
 
   const binaryDir = `output/client/${platform}-${goArch}`;
+  if (personalBuild) {
+    electronConfig.appId = 'io.github.huazhu624tech.personalvpn';
+    electronConfig.productName = 'Personal VPN';
+    electronConfig.artifactName = 'PersonalVPN-${version}-${arch}-Setup.${ext}';
+    electronConfig.extraMetadata.name = 'personal-vpn-client';
+    electronConfig.nsis.oneClick = false;
+    electronConfig.nsis.allowToChangeInstallationDirectory = true;
+  }
 
   // Keep the Go-built binaries outside the asar archive so they're loadable
   // at runtime (CGo .so / .dll can't be loaded from inside asar).
@@ -108,17 +120,17 @@ export async function main(...parameters) {
 
   // build electron binary
   await electron.build({
-    publish: buildMode === 'release' ? 'always' : 'never',
+    publish: buildMode === 'release' && !personalBuild ? 'always' : 'never',
     targets: Platform[platform.toLocaleUpperCase()].createTarget(),
     config: {
       ...electronConfig,
-      publish: autoUpdateUrl
+      publish: autoUpdateUrl && !personalBuild
         ? {
             provider: autoUpdateProvider,
             url: autoUpdateUrl,
           }
         : undefined,
-      generateUpdatesFilesForAllChannels: buildMode === 'release',
+      generateUpdatesFilesForAllChannels: buildMode === 'release' && !personalBuild,
       extraMetadata: {
         ...electronConfig.extraMetadata,
         version: versionName,

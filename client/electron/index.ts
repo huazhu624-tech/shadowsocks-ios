@@ -51,6 +51,7 @@ import * as errors from '../web/model/errors';
 //   - SENTRY_DSN is either undefined or a url string
 //   - APP_VERSION should always be a string
 declare const SENTRY_DSN: string | undefined;
+declare const PERSONAL_WINDOWS_BUILD: boolean;
 declare const APP_VERSION: string;
 
 // Run-time environment variables:
@@ -138,7 +139,7 @@ function setupTray(): void {
   tray.on('click', () => {
     mainWindow?.show();
   });
-  tray.setToolTip('Outline');
+  tray.setToolTip(PERSONAL_WINDOWS_BUILD ? 'Personal VPN' : 'Outline');
   updateTray(TunnelStatus.DISCONNECTED);
 }
 
@@ -440,6 +441,9 @@ function setUiTunnelStatus(status: TunnelStatus, tunnelId: string) {
 }
 
 function checkForUpdates() {
+  if (PERSONAL_WINDOWS_BUILD) {
+    return;
+  }
   autoUpdater.checkForUpdates().catch(e => {
     console.error('Failed to check for updates', e);
   });

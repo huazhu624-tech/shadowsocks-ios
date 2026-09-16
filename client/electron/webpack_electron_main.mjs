@@ -49,6 +49,7 @@ export default ({sentryDsn, appVersion}) => [
       new webpack.DefinePlugin({
         SENTRY_DSN: JSON.stringify(sentryDsn),
         APP_VERSION: JSON.stringify(appVersion),
+        PERSONAL_WINDOWS_BUILD: JSON.stringify(process.env.PERSONAL_WINDOWS_BUILD === '1'),
       }),
     ],
     output: {

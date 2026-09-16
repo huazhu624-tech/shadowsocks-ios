@@ -1,0 +1,56 @@
+# Copyright 2026 Personal VPN Contributors
+# SPDX-License-Identifier: Apache-2.0
+name: Personal Windows VPN
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/windows-client]
+    paths:
+      - '.github/workflows/personal-windows.yml'
+      - 'client/**'
+      - 'personal-windows/**'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    env:
+      PERSONAL_WINDOWS_BUILD: '1'
+      WINDOWS_SIGNING_CERT_TYPE: none
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - run: git config --system core.longpaths true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+      - uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29
+        with:
+          version: 0.13.0
+          use-cache: false
+      - uses: microsoft/setup-msbuild@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Configure personal service
+        run: node personal-windows/prepare.mjs
+      - name: Compile routing service
+        run: msbuild client/electron/windows/OutlineService/OutlineService/OutlineService.csproj /p:Configuration=Release /p:Platform=x86
+      - name: Build release installer
+        run: npm run action client/electron/build windows -- --arch=ia32 --buildMode=release --versionName=0.1.0
+      - name: Verify package
+        run: node personal-windows/verify.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PersonalVPN-Windows
+          path: |
+            output/client/electron/build/PersonalVPN-*-Setup.exe
+            output/client/electron/build/SHA256SUMS.txt
+            output/client/electron/build/package-manifest.json
+            personal-windows/README.md
+          if-no-files-found: error
+          retention-days: 30
