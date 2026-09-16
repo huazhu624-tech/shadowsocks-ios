@@ -4,6 +4,14 @@
 
 适用目标：普通 Intel / AMD 电脑的 Windows 10 / 11。应用为 x86 架构，可在 x64 Windows 中运行；本次不提供 ARM64 原生版。
 
+## 已验证的构建
+
+- 构建成功：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/35097527819
+- 下载：https://github.com/huazhu624-tech/shadowsocks-ios/actions/runs/35097527819/artifacts/10447122790 （需登录 GitHub，保存至 2026-10-16）
+- 安装程序：`PersonalVPN-0.1.0-ia32-Setup.exe`，96,128,807 字节。
+- SHA-256：`f40b2e155710546389a175026d772f1b79799a17b8c9a14ae01467a5f59f11fe`
+- 已下载产物并核验压缩包、安装程序的 SHA-256。尚未完成 Windows 真机安装和节点联网测试。
+
 ## 安装与使用
 
 1. 解压下载文件，运行 `PersonalVPN-0.1.0-ia32-Setup.exe`，安装路由服务和 TAP 驱动时需要管理员授权。
